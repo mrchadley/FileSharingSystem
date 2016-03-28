@@ -10,8 +10,8 @@
 <BorderPane fx:controller="client.Controller" xmlns:fx="http://javafx.com/fxml">
     <top>
         <HBox styleClass="test">
-            <Button text="UPLOAD"/>
-            <Button text="DOWNLOAD"/>
+            <Button onAction="#upload" fx:id="upload" text="UPLOAD"/>
+            <Button onAction="#download" fx:id="download" text="DOWNLOAD"/>
         </HBox>
     </top>
     <center>
