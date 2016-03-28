@@ -1,7 +1,6 @@
 package server;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -28,8 +27,22 @@ public class UploadThread extends Thread
         try {
             Socket clientSocket = uploadSocket.accept();
 
+            String line = null;
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
-        }catch( IOException e)
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+            while((line = in.readLine()) != null)
+            {
+                writer.write(line);
+                writer.newLine();
+            }
+
+            writer.close();
+            clientSocket.close();
+
+        }
+        catch( IOException e)
         {
             e.printStackTrace();
         }
