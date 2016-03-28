@@ -39,10 +39,12 @@ public class Controller
         System.out.println(serverDir.toString());
 
 
+
         File[] filesC = clientDir.listFiles();
         for (File file : filesC) {
             if ( (file.isDirectory() == false) && (file.getAbsolutePath().endsWith(".txt") )) {
-                filenameClient = file.toString().substring(filenameClient.lastIndexOf("/") + 1);
+                filenameClient = file.toString();
+                filenameClient = filenameClient.substring(filenameClient.lastIndexOf("/") + 1);
                 clientView.getItems().addAll(filenameClient);
             }
         }
@@ -50,7 +52,8 @@ public class Controller
         File[] filesS = serverDir.listFiles();
         for (File file : filesS) {
             if ( (file.isDirectory() == false) && (file.getAbsolutePath().endsWith(".txt") )) {
-                filenameServer = file.toString().substring(filenameServer.lastIndexOf("/") + 1);
+                filenameServer = file.toString();
+                filenameServer = filenameServer.substring(filenameServer.lastIndexOf("/") + 1);
                 serverView.getItems().addAll(filenameServer);
             }
         }
