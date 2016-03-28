@@ -32,6 +32,7 @@ public class Controller
 
         System.out.println(serverDir.toString());
 
+
         clientView.getItems().addAll(clientDir.listFiles());
         serverView.getItems().addAll(serverDir.listFiles());
     }
