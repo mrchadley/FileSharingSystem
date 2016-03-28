@@ -40,14 +40,19 @@ public class Controller
 
         for(File file : clientDir.listFiles())
         {
-            clientMap.put(file, file.getName());
-            clientView.getItems().add(file.getName());
+            if (file.getName().endsWith(".txt")) {
+                clientMap.put(file, file.getName());
+                clientView.getItems().add(file.getName());
+            }
         }
+
 
         for(File file : serverDir.listFiles())
         {
-            serverMap.put(file, file.getName());
-            serverView.getItems().add(file.getName());
+            if (file.getName().endsWith(".txt")) {
+                serverMap.put(file, file.getName());
+                serverView.getItems().add(file.getName());
+            }
         }
 
     }
