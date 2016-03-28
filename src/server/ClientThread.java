@@ -75,7 +75,7 @@ public class ClientThread extends Thread
     private void uploadFile(String filename)
     {
         try {
-            File file = new File(filename);
+            File file = new File(serverDirectory + "\\" + filename);
             if(!file.exists())
             {
                 file.createNewFile();
@@ -101,7 +101,7 @@ public class ClientThread extends Thread
     {
         try {
             input.close();
-            File file = new File(filename);
+            File file = new File(serverDirectory + "\\" + filename);
 
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
             Scanner scan = new Scanner(file);

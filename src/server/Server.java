@@ -22,6 +22,8 @@ public class Server implements Runnable
 
             if(!sharedFolder.exists())
                 sharedFolder.mkdir();
+
+            System.out.println(sharedFolder);
         }
         catch (IOException e)
         {
@@ -60,7 +62,7 @@ public class Server implements Runnable
 
     public static void main(String[] args)
     {
-        Server server = new Server(8080, "Server-Shared");
+        Server server = new Server(8080, "C:\\Server-Shared");
         server.run();
     }
 }
