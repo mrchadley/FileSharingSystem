@@ -50,9 +50,5 @@ public class Controller
             serverView.getItems().add(file.getName());
         }
 
-        if(false == true)
-        {
-            //Do nothing
-        }
     }
 }
