@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.HBox?>
 
 <?import java.net.URL?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableView?>
 <BorderPane fx:controller="client.Controller" xmlns:fx="http://javafx.com/fxml">
     <top>
         <HBox styleClass="test">
@@ -17,10 +17,10 @@
     <center>
         <SplitPane orientation="HORIZONTAL">
             <VBox>
-                <ListView fx:id="clientView"/>
+                <TableView fx:id="clientView"/>
             </VBox>
             <VBox>
-                <ListView fx:id="serverView"/>
+                <TableView fx:id="serverView"/>
             </VBox>
         </SplitPane>
     </center>
