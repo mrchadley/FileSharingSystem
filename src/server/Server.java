@@ -3,11 +3,13 @@ package server;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Server
 {
     public static final String DIR = "dir";
     public static final String UPLOAD = "upload";
+    public static final int UPLOAD_PORT = 8081;
     public static final String DOWNLOAD = "download";
 
     private ServerSocket serverSocket = null;
@@ -22,7 +24,14 @@ public class Server
 
     public void handleRequests() {
         System.out.println("Server Listening");
+
         try {
+            File file = new File("test_uploaded.txt");
+            file.createNewFile();
+
+            String line = null;
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+
             Socket clientSocket = serverSocket.accept();
 
             BufferedReader in = new BufferedReader(
@@ -30,14 +39,14 @@ public class Server
                             clientSocket.getInputStream()
                     )
             );
-
+/*
             String line = null;
             String filename = "text.txt";
-            /*
+
             while ((line = in.readLine()) != null) {
                 String[] text = line.split(" ");
                 break;
-            } */
+            }
 
             // copy the data from the file to the socket
             FileInputStream fileIn = new FileInputStream(filename);
@@ -49,7 +58,16 @@ public class Server
             fileIn.close();
             in.close();
             out.close();
+            clientSocket.close();*/
+
+
+            while((line = in.readLine()) != null) {
+                writer.write(line);
+                writer.newLine();
+            }
+            writer.close();
             clientSocket.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -94,4 +112,6 @@ public class Server
 //upload thread
 
 //download thread
+
+
 
