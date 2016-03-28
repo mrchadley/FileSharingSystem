@@ -30,15 +30,15 @@ public class ClientThread extends Thread
             String line = input.readLine();
             String[] args = line.split(" ");
 
-            if (args[0].intern() == "dir")
+            if (args[0].intern() == "DIR")
             {
                 displayDirectory();
             }
-            else if (args[0].intern() == "upload")
+            else if (args[0].intern() == "UPLOAD")
             {
                 uploadFile(args[1]);
             }
-            else if (args[0].intern() == "download")
+            else if (args[0].intern() == "DOWNLOAD")
             {
                 downloadFile(args[1]);
             }
@@ -74,6 +74,7 @@ public class ClientThread extends Thread
     }
     private void uploadFile(String filename)
     {
+        System.out.println("uploading file");
         try {
             File file = new File(serverDirectory + "\\" + filename);
             if(!file.exists())

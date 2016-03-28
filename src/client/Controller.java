@@ -17,7 +17,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.LinkedList;
-
+import java.util.Scanner;
 
 
 public class Controller
@@ -25,8 +25,8 @@ public class Controller
     @FXML private ListView<String> clientView;
     @FXML private ListView<String> serverView;
 
-    HashMap<File, String> clientMap = new HashMap<>();
-    HashMap<File, String> serverMap = new HashMap<>();
+    HashMap<String, File> clientMap = new HashMap<>();
+    HashMap<String, File> serverMap = new HashMap<>();
 
     private File clientDir = new File(".");
     private File serverDir = new File(".");
@@ -37,11 +37,23 @@ public class Controller
     //@FXML private Button upload;
 
 
-    public void upload(ActionEvent actionEvent) throws IOException{
-        socket = new Socket("127.0.0.1", 8080);
+    public void upload(ActionEvent actionEvent) throws IOException
+    {
+        try {
+            socket = new Socket("127.0.0.1", 8080);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         PrintWriter out = new PrintWriter(socket.getOutputStream());
         String selectedFile = clientView.getSelectionModel().getSelectedItem();
         out.println("UPLOAD " + selectedFile);
+
+        Scanner scan = new Scanner(clientMap.get(selectedFile));
+        while(scan.hasNextLine())
+        {
+            out.println(scan.nextLine());
+        }
+        out.close();
     }
 
 
@@ -51,11 +63,6 @@ public class Controller
 
     public void initialize()
     {
-        try {
-            socket = new Socket("127.0.0.1", 8080);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Select the client directory...");
         chooser.setInitialDirectory(new File("."));
@@ -73,7 +80,7 @@ public class Controller
         for(File file : clientDir.listFiles())
         {
             if (file.getName().endsWith(".txt")) {
-                clientMap.put(file, file.getName());
+                clientMap.put(file.getName(), file);
                 clientView.getItems().add(file.getName());
             }
         }
@@ -82,7 +89,7 @@ public class Controller
         for(File file : serverDir.listFiles())
         {
             if (file.getName().endsWith(".txt")) {
-                serverMap.put(file, file.getName());
+                serverMap.put(file.getName(), file);
                 serverView.getItems().add(file.getName());
             }
         }

@@ -52,6 +52,7 @@ public class Server implements Runnable
 
                 System.out.println("Connection Established");
                 ClientThread newConnection = new ClientThread(connectionBuffer, sharedFolder);
+                newConnection.run();
             }
             catch(IOException ioe)
             {
@@ -62,7 +63,7 @@ public class Server implements Runnable
 
     public static void main(String[] args)
     {
-        Server server = new Server(8080, "C:\\Server-Shared");
+        Server server = new Server(8080, "Server-Shared");
         server.run();
     }
 }
