@@ -8,23 +8,7 @@ public class Server
 
     public static void main(String[] args)
     {
-        String operation = args[0].toLowerCase();
-        String filename = "";
-        if(args.length == 2)
-                filename = args[1];
 
-        if(operation == DIR)
-        {
-            displayDirectory();
-        }
-        else if(operation == UPLOAD)
-        {
-            uploadFile(filename);
-        }
-        else if(operation == DOWNLOAD)
-        {
-            downloadFile(filename);
-        }
     }
 
     public static void displayDirectory()
@@ -41,4 +25,11 @@ public class Server
     }
 }
 
+//main/listener thread
+
+//display directory thread
+
+//upload thread
+
+//download thread
 
