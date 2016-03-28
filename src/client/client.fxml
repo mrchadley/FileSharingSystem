@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.HBox?>
 
 <?import java.net.URL?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ListView?>
 <BorderPane fx:controller="client.Controller" xmlns:fx="http://javafx.com/fxml">
     <top>

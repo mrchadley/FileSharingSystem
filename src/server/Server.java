@@ -11,6 +11,7 @@ public class Server
     public static final String UPLOAD = "upload";
     public static final int UPLOAD_PORT = 8081;
     public static final String DOWNLOAD = "download";
+    public static final int DOWNLOAD_PORT = 8008;
 
     private ServerSocket serverSocket = null;
 

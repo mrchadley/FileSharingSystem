@@ -17,56 +17,18 @@ public class Client {
     public void upload(String txt)
     throws IOException{
 
-            Socket socket = new Socket(this.hostname, this.port);
-
-            //BufferedWriter bufOut = new BufferedWriter( new OutputStreamWriter(socket.getOutputStream()) );
-/*
-            BufferedReader bufIn = new BufferedReader( new InputStreamReader(socket.getInputStream()) );
-
-            FileWriter outFile = new FileWriter("test.txt");
-                try {
-                    String line = null;
-                    while ((line = bufIn.readLine()) != null) {
-                        System.out.println(line);
-                        outFile.write(line);
-                    }
-                    //bufOut.flush();
-                } catch ( IOException e ) {
-                    e.printStackTrace();
-                }
-*/
+        Socket socket = new Socket(this.hostname, this.port);
 
         PrintWriter out = new PrintWriter(socket.getOutputStream());
         Scanner scan = new Scanner(new File("test.txt"));
 
-        while(scan.hasNextLine()) {
+        while(scan.hasNextLine())
+        {
             out.println(scan.nextLine());
         }
 
-
-
-
-/*
-            FileWriter out = new FileWriter(socket.getOutputStream());
-            out.println("Upload " + txt + "\r\n");
-            out.println("Host: " + this.hostname + "\r\n\r\n");
-            out.flush();
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-            //FileWriter outFile = new FileWriter(new OutputStreamWriter(socket.getOutputStream()));
-            String line = null;
-            while ((line = in.readLine()) != null) {
-                System.out.println(line);
-                out.write(line);
-            }
-*/
-            out.close();
-           // in.close();
-            socket.close();
-
-
-
+        out.close();
+        socket.close();
     }
 
     public static void main(String[] args) {

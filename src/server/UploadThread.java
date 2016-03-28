@@ -9,13 +9,13 @@ public class UploadThread extends Thread
     private ServerSocket uploadSocket;
     private File file;
 
-    UploadThread(String name, String filename, int port)
+    UploadThread(String name, String filename)
     {
         super(name);
         try {
             file = new File(filename);
             file.createNewFile();
-            uploadSocket = new ServerSocket(port);
+            uploadSocket = new ServerSocket(Server.UPLOAD_PORT);
         }catch(IOException e)
         {
             e.printStackTrace();
