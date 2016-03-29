@@ -7,7 +7,10 @@ import java.util.Scanner;
 public class ClientThread extends Thread
 {
     private Socket clientSocket;
+
     private BufferedReader input;
+    private PrintWriter output;
+
     private File serverDirectory;
 
     public ClientThread(Socket connection, File serverDirectory)
@@ -19,16 +22,25 @@ public class ClientThread extends Thread
 
     @Override public void run()
     {
+        System.out.println("running");
+
         handleCommand();
     }
 
     private void handleCommand()
     {
+        System.out.println("handling");
         try {
+
             input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            output = new PrintWriter(clientSocket.getOutputStream(), true);
+
 
             String line = input.readLine();
+
+            System.out.println(line);
             String[] args = line.split(" ");
+
 
             if (args[0].intern() == "DIR")
             {
@@ -45,80 +57,71 @@ public class ClientThread extends Thread
         }
         catch(IOException ioe)
         {
-            ioe.printStackTrace();;
-        }
-
-    }
-
-
-    private void displayDirectory()
-    {
-        try
-        {
-            input.close();
-
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
-
-            for(File file : serverDirectory.listFiles())
-            {
-                if(file.isFile() && file.getName().endsWith(".txt"));
-                out.println(file.getName());
-            }
-            out.close();
-            clientSocket.close();
-        }
-        catch(IOException ioe)
-        {
             ioe.printStackTrace();
         }
+        catch(InterruptedException ie)
+        {
+            ie.printStackTrace();
+        }
+
     }
-    private void uploadFile(String filename)
+
+
+    private void displayDirectory() throws IOException, InterruptedException
+    {
+        System.out.println("displaying directory");
+
+        for(File file : serverDirectory.listFiles())
+        {
+            if(file.isFile() && file.getName().endsWith(".txt"))
+            {
+                output.println(file.getName());
+                System.out.println(file.getName());
+            }
+        }
+        output.close();
+        input.close();
+        clientSocket.close();
+        this.interrupt();
+    }
+    private void uploadFile(String filename) throws IOException, InterruptedException
     {
         System.out.println("uploading file");
-        try {
-            File file = new File(serverDirectory + "\\" + filename);
-            if(!file.exists())
-            {
-                file.createNewFile();
-            }
-            String line = null;
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
-            while((line = input.readLine()) != null)
-            {
-                writer.write(line);
-                writer.newLine();
-            }
-            input.close();
-            writer.close();
-            clientSocket.close();
-        }
-        catch(IOException e)
+        File file = new File(serverDirectory + "/" + filename);
+        if(!file.exists())
         {
-            e.printStackTrace();
+            file.createNewFile();
         }
+
+        output = new PrintWriter(file);
+
+        String line = null;
+
+        while((line = input.readLine()) != null)
+        {
+            output.println(line);
+        }
+        input.close();
+        output.close();
+        clientSocket.close();
+        this.interrupt();
+
     }
-    private void downloadFile(String filename)
+    private void downloadFile(String filename)throws IOException, InterruptedException
     {
-        try {
-            input.close();
-            File file = new File(serverDirectory + "\\" + filename);
+        File file = new File(serverDirectory + "/" + filename);
 
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
-            Scanner scan = new Scanner(file);
+        Scanner scan = new Scanner(file);
 
-            while(scan.hasNextLine())
-            {
-                out.println(scan.nextLine());
-            }
-
-            out.close();
-            scan.close();
-            clientSocket.close();
-        }
-        catch(IOException e)
+        while(scan.hasNextLine())
         {
-            e.printStackTrace();
+            output.println(scan.nextLine());
         }
+
+        output.close();
+        scan.close();
+        clientSocket.close();
+        this.interrupt();
     }
 }
