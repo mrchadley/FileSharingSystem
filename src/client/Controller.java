@@ -26,7 +26,8 @@ public class Controller
     HashMap<String, File> serverMap = new HashMap<>();
 
     private File clientDir = new File(".");
-    private File serverDir = new File(".");
+
+    private String serverIP = "10.10.123.136";
 
     Socket socket;
 
@@ -51,7 +52,7 @@ public class Controller
 
     public void upload(ActionEvent actionEvent) throws IOException
     {
-        socket = new Socket("127.0.0.1", 8080);
+        socket = new Socket(serverIP, 8080);
         is = socket.getInputStream();
         os = socket.getOutputStream();
 
@@ -72,8 +73,8 @@ public class Controller
     public void download(ActionEvent actionEvent) throws IOException
     {
         String selectedFile = serverView.getSelectionModel().getSelectedItem();
-        if(selectedFile != null) {
-            socket = new Socket("127.0.0.1", 8080);
+        //if(selectedFile != null) {
+            socket = new Socket(serverIP, 8080);
             is = socket.getInputStream();
             os = socket.getOutputStream();
 
@@ -99,14 +100,14 @@ public class Controller
             in.close();
             fileOut.close();
             out.close();
-        }
+        //}
         refresh();
     }
 
     public void getDir()
     {
         try {
-            socket = new Socket("127.0.0.1", 8080);
+            socket = new Socket(serverIP, 8080);
             OutputStream os = socket.getOutputStream();
             PrintWriter pw = new PrintWriter(os, true);
 
