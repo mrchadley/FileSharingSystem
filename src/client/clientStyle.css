@@ -1,5 +1,91 @@
-.test
+.button-bar
 {
-    -fx-background-color: #323239;
-    -fx-padding: 3px;
+    -fx-background-color: #323232;
+    -fx-padding: 10px;
+    -fx-spacing: 10px;
+}
+.label
+{
+    -fx-text-fill: greenyellow;
+    -fx-font-weight: 900;
+    -fx-font-size: 20px;
+    -fx-border-width: 3px 9px;
+    -fx-border-color: transparent;
+}
+.file-view
+{
+
+}
+.border-pane
+{
+    -fx-background-color: black;
+}
+.list-view
+{
+    -fx-background-color: #323232;
+    -fx-border-width: 2px 0 0 0;
+    -fx-border-color: greenyellow;
+}
+
+.list-view .scroll-bar:vertical .track,
+.list-view .scroll-bar:horizontal .track
+{
+    -fx-background-color: #323232;
+    -fx-background-radius: 5px;
+    -fx-background-insets: 5px;
+    -fx-border-radius: 0px;
+}
+
+.list-view .scroll-bar:vertical .thumb,
+.list-view .scroll-bar:horizontal .thumb
+{
+    -fx-background-color: greenyellow;
+    -fx-background-radius: 5px;
+    -fx-background-insets: 5px;
+}
+
+.list-view .scroll-bar:vertical,
+.list-view .scroll-bar:horizontal
+{
+    -fx-background-color: #404040;
+}
+
+
+.list-cell
+{
+    -fx-text-fill: greenyellow;
+}
+
+.list-cell:filled:selected:focused
+{
+    -fx-background-color: greenyellow;
+    -fx-text-fill: black;
+}
+
+.list-cell:even
+{
+    -fx-background-color: #373737;
+}
+.list-cell:odd
+{
+    -fx-background-color: #323232;
+}
+.split-pane
+{
+    -fx-border-width: 2px 0 0 0;
+    -fx-border-color: greenyellow;
+    -fx-padding: 0;
+    -fx-background-color: #323232;
+}
+.button, .button:hover, .button:pressed
+{
+    -fx-background-color: greenyellow;
+    -fx-text-fill: black;
+    -fx-background-radius: 1px;
+}
+
+.split-pane-divider
+{
+    -fx-background-color: greenyellow;
+    -fx-padding: 1px;
 }

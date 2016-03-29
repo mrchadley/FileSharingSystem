@@ -7,9 +7,12 @@
 
 <?import java.net.URL?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
 <BorderPane fx:controller="client.Controller" xmlns:fx="http://javafx.com/fxml">
     <top>
-        <HBox styleClass="test">
+        <HBox styleClass="button-bar">
             <Button onAction="#upload" fx:id="upload" text="UPLOAD"/>
             <Button onAction="#download" fx:id="download" text="DOWNLOAD"/>
         </HBox>
@@ -17,10 +20,12 @@
     <center>
         <SplitPane orientation="HORIZONTAL">
             <VBox>
-                <ListView fx:id="clientView"/>
+                <Label text="CLIENT" alignment="TOP_LEFT"/>
+                <ListView fx:id="clientView" prefHeight="1600"/>
             </VBox>
             <VBox>
-                <ListView fx:id="serverView"/>
+                <Label text="SERVER" alignment="TOP_RIGHT"/>
+                <ListView fx:id="serverView" prefHeight="1600"/>
             </VBox>
         </SplitPane>
     </center>

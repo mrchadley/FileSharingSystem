@@ -1,6 +1,10 @@
 package client;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -8,6 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
+import javafx.util.Duration;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -23,12 +28,15 @@ public class Controller
     @FXML private ListView<String> serverView;
 
     HashMap<String, File> clientMap = new HashMap<>();
-    HashMap<String, File> serverMap = new HashMap<>();
 
     private File clientDir = new File(".");
 
-    private String serverIP = "10.10.123.136";
+    private String serverIP = "127.0.0.1";
+    //170.20.10.2
 
+    //192.168.2.113
+    //10.10.123.136
+    //10.10.120.1
     Socket socket;
 
     InputStream is;
@@ -52,20 +60,22 @@ public class Controller
 
     public void upload(ActionEvent actionEvent) throws IOException
     {
-        socket = new Socket(serverIP, 8080);
-        is = socket.getInputStream();
-        os = socket.getOutputStream();
-
-        PrintWriter out = new PrintWriter(os, true);
         String selectedFile = clientView.getSelectionModel().getSelectedItem();
-        out.println("UPLOAD " + selectedFile);
+        if(selectedFile != null) {
+            socket = new Socket(serverIP, 8080);
+            is = socket.getInputStream();
+            os = socket.getOutputStream();
 
-        Scanner scan = new Scanner(clientMap.get(selectedFile));
-        while(scan.hasNextLine())
-        {
-            out.println(scan.nextLine());
+            PrintWriter out = new PrintWriter(os, true);
+
+            out.println("UPLOAD " + selectedFile);
+
+            Scanner scan = new Scanner(clientMap.get(selectedFile));
+            while (scan.hasNextLine()) {
+                out.println(scan.nextLine());
+            }
+            out.close();
         }
-        out.close();
         refresh();
     }
 
@@ -73,7 +83,7 @@ public class Controller
     public void download(ActionEvent actionEvent) throws IOException
     {
         String selectedFile = serverView.getSelectionModel().getSelectedItem();
-        //if(selectedFile != null) {
+        if(selectedFile != null) {
             socket = new Socket(serverIP, 8080);
             is = socket.getInputStream();
             os = socket.getOutputStream();
@@ -100,7 +110,7 @@ public class Controller
             in.close();
             fileOut.close();
             out.close();
-        //}
+        }
         refresh();
     }
 
