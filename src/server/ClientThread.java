@@ -22,14 +22,13 @@ public class ClientThread extends Thread
 
     @Override public void run()
     {
-        System.out.println("running");
+
 
         handleCommand();
     }
 
     private void handleCommand()
     {
-        System.out.println("handling");
         try {
 
             input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -37,23 +36,30 @@ public class ClientThread extends Thread
 
 
             String line = input.readLine();
+            int index = line.indexOf(" ");
+            String command;
+            String filename;
 
-            System.out.println(line);
-            String[] args = line.split(" ");
+            if(index == -1)
+            {
+                command = line;
+                filename = "";
+            }
+            else
+            {
+                command = line.substring(0, index);
+                filename = line.substring(index + 1, line.length());
+            }
 
-            String filename = "";
-            for(int i = 1; i < args.length; i++)
-                filename += args[i];
-
-            if (args[0].intern() == "DIR")
+            if (command.intern() == "DIR")
             {
                 displayDirectory();
             }
-            else if (args[0].intern() == "UPLOAD")
+            else if (command.intern() == "UPLOAD")
             {
                 uploadFile(filename);
             }
-            else if (args[0].intern() == "DOWNLOAD")
+            else if (command.intern() == "DOWNLOAD")
             {
                 downloadFile(filename);
             }
@@ -72,14 +78,12 @@ public class ClientThread extends Thread
 
     private void displayDirectory() throws IOException, InterruptedException
     {
-        System.out.println("displaying directory");
 
         for(File file : serverDirectory.listFiles())
         {
             if(file.isFile() && file.getName().endsWith(".txt"))
             {
                 output.println(file.getName());
-                System.out.println(file.getName());
             }
         }
         output.close();
@@ -89,8 +93,6 @@ public class ClientThread extends Thread
     }
     private void uploadFile(String filename) throws IOException, InterruptedException
     {
-        System.out.println("uploading file");
-
         File file = new File(serverDirectory + "/" + filename);
         if(!file.exists())
         {
