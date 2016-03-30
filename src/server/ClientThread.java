@@ -43,7 +43,7 @@ public class ClientThread extends Thread
 
             String filename = "";
             for(int i = 1; i < args.length; i++)
-                filename += " " + args[i];
+                filename += args[i];
 
             if (args[0].intern() == "DIR")
             {
