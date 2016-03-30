@@ -31,7 +31,7 @@ public class Controller
 
     private File clientDir = new File(".");
 
-    private String serverIP = "127.0.0.1";
+    private String serverIP = "10.10.123.136";
     //170.20.10.2
 
     //192.168.2.113

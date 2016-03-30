@@ -41,6 +41,9 @@ public class ClientThread extends Thread
             System.out.println(line);
             String[] args = line.split(" ");
 
+            String filename = "";
+            for(int i = 1; i < args.length; i++)
+                filename += " " + args[i];
 
             if (args[0].intern() == "DIR")
             {
@@ -48,11 +51,11 @@ public class ClientThread extends Thread
             }
             else if (args[0].intern() == "UPLOAD")
             {
-                uploadFile(args[1]);
+                uploadFile(filename);
             }
             else if (args[0].intern() == "DOWNLOAD")
             {
-                downloadFile(args[1]);
+                downloadFile(filename);
             }
         }
         catch(IOException ioe)
