@@ -1,24 +1,16 @@
 package client;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
+
 import javafx.stage.DirectoryChooser;
-import javafx.util.Duration;
+import javafx.stage.StageStyle;
 
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.Optional;
 import java.util.Scanner;
 
 
@@ -31,19 +23,12 @@ public class Controller
 
     private File clientDir = new File(".");
 
-    private String serverIP = "10.10.123.136";
-    //170.20.10.2
+    private String serverIP = "127.0.0.1";
 
-    //192.168.2.113
-    //10.10.123.136
-    //10.10.120.1
     Socket socket;
 
     InputStream is;
     OutputStream os;
-
-    //Socket socket = new Socket();
-    //@FXML private Button upload;
 
     public void refresh()
     {
@@ -143,8 +128,18 @@ public class Controller
 
     public void initialize()
     {
+        TextInputDialog ipDialog = new TextInputDialog("127.0.0.1");
+        ipDialog.initStyle(StageStyle.UNIFIED);
+        ipDialog.setTitle("Server IP Address");
+        ipDialog.setHeaderText("");
+        ipDialog.setContentText("Please enter the Server's IP Address: ");
+
+        Optional<String> ip = ipDialog.showAndWait();
+        if(ip.isPresent())
+            serverIP = ip.get();
+
         DirectoryChooser chooser = new DirectoryChooser();
-        chooser.setTitle("Select the client directory...");
+        chooser.setTitle("Please select the Client directory...");
         chooser.setInitialDirectory(new File("."));
         clientDir = chooser.showDialog(null);
 
